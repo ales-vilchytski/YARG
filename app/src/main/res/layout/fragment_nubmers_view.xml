@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/view_vertical_margin"
+                android:layout_marginRight="@dimen/view_horizontal_margin"
+                android:layout_marginBottom="@dimen/view_vertical_margin"
+                android:layout_marginLeft="@dimen/view_horizontal_margin"
+                tools:context=".fragments.NubmersViewFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|end"
+                android:text="@string/numbers_view_edit_label_from"/>
+            <EditText
+                android:id="@+id/fragment_numbers_view_from_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:layout_weight="1"
+                android:text="1"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
