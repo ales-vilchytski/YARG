@@ -1,6 +1,5 @@
 package by.ales.android.yarg;
 
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.ales.android.yarg.fragments.BlankFragment;
-import by.ales.android.yarg.fragments.NubmersViewFragment;
+import by.ales.android.yarg.fragments.NubmersGenerationFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NubmersViewFragment.OnFragmentInteractionListener {
+        implements NubmersGenerationFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "MainActivity";
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager pager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(NubmersViewFragment.newInstance(null, null), getText(R.string.fragment_title_numbers).toString());
+        adapter.addFragment(NubmersGenerationFragment.newInstance(null, null), getText(R.string.fragment_numbers_generation_title).toString());
         adapter.addFragment(new BlankFragment(), getText(R.string.fragment_title_lists).toString());
         adapter.addFragment(new BlankFragment(), getText(R.string.fragment_title_dices).toString());
         pager.setAdapter(adapter);

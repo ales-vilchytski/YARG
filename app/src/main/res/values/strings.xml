@@ -4,10 +4,11 @@
     <string name="main_tab_layout_tab_lists">Lists</string>
     <string name="main_tab_layout_tab_dices">Dices</string>
 
-    <string name="fragment_title_numbers">Numbers generation</string>
+    <string name="fragment_numbers_generation_title">Numbers generation</string>
+    <string name="fragment_numbers_generation_from_label">From</string>
+    <string name="fragment_numbers_generation_to_label">To</string>
 
     <string name="under_construction">Under construction</string>
     <string name="fragment_title_lists">Generate lists</string>
     <string name="fragment_title_dices">Roll dices</string>
-    <string name="numbers_view_edit_label_from">From</string>
 </resources>
