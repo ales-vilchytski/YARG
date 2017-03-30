@@ -11,4 +11,5 @@
     <string name="under_construction">Under construction</string>
     <string name="fragment_title_lists">Generate lists</string>
     <string name="fragment_title_dices">Roll dices</string>
+    <string name="quantity">Quantity</string>
 </resources>

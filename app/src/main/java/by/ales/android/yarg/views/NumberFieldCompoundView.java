@@ -65,13 +65,13 @@ public class NumberFieldCompoundView extends RelativeLayout implements TextWatch
         params.addRule(RelativeLayout.RIGHT_OF, labelView.getId());
 
         if (attrs != null) {
-            TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.NumberFieldCompoundView);
-            String label = arr.getString(R.styleable.NumberFieldCompoundView_label);
+            TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.FieldWithLabel);
+            String label = arr.getString(R.styleable.FieldWithLabel_label);
             if (label != null) {
                 labelView.setText(label);
             }
 
-            String value = arr.getString(R.styleable.NumberFieldCompoundView_value);
+            String value = arr.getString(R.styleable.FieldWithLabel_value);
             if (value != null) {
                 editView.setText(value);
             }

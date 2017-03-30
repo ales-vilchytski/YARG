@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <TextView
+        android:tag="tag_seekbar_field_view_label"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/view_horizontal_margin"
+        android:layout_marginEnd="@dimen/view_horizontal_margin"
+        android:text="label"/>
+    <EditText
+        android:tag="tag_seekbar_field_view_edit"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="54dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/border"
+        android:paddingLeft="@dimen/view_horizontal_margin"
+        android:paddingStart="@dimen/view_horizontal_margin"
+        android:inputType="number"
+        android:text="0"/>
+    <SeekBar
+        android:tag="tag_seekbar_field_view_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/view_horizontal_margin"
+        android:paddingStart="@dimen/view_horizontal_margin"
+        android:progress="0"
+        />
+
+</RelativeLayout>
