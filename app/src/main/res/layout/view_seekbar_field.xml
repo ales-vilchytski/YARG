@@ -21,7 +21,6 @@
         android:background="@drawable/border"
         android:paddingLeft="@dimen/view_horizontal_margin"
         android:paddingStart="@dimen/view_horizontal_margin"
-        android:inputType="number"
         android:text="0"/>
     <SeekBar
         android:tag="tag_seekbar_field_view_seekbar"

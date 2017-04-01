@@ -5,7 +5,9 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.ales.android.yarg.R;
+import by.ales.android.yarg.utils.NumberUtils;
+import by.ales.android.yarg.views.filters.DiscardNonChangingNumberFilter;
+import by.ales.android.yarg.views.filters.MinMaxNumberFilter;
 
 
 /**
@@ -56,6 +61,9 @@ public class NumberFieldCompoundView extends RelativeLayout implements TextWatch
         editView = (EditText) this.findViewWithTag("tag_number_field_view_edit");
         editView.setId(View.generateViewId());
         editView.addTextChangedListener(this);
+        editView.setFilters(new InputFilter[] {
+                new DiscardNonChangingNumberFilter()
+        });
 
         labelView = (TextView) this.findViewWithTag("tag_number_field_view_label");
         labelView.setId(View.generateViewId());
@@ -80,7 +88,7 @@ public class NumberFieldCompoundView extends RelativeLayout implements TextWatch
     }
 
     public Number getValue() {
-        return parseText(editView.getText());
+        return NumberUtils.tryParseNumber(editView.getText());
     }
 
     public void setValue(Number v) {
@@ -100,25 +108,13 @@ public class NumberFieldCompoundView extends RelativeLayout implements TextWatch
     @Override
     public void afterTextChanged(Editable s) {
         if (valueChangedListeners != null) {
-            Number n = parseText(s);
-            for (Listener valueChangedListener : valueChangedListeners) {
-                valueChangedListener.onValueChanged(n);
+            Number n = NumberUtils.tryParseNumber(s);
+            if (n != null) {
+                for (Listener valueChangedListener : valueChangedListeners) {
+                    valueChangedListener.onValueChanged(n);
+                }
             }
         }
-    }
-
-    private Number parseText(CharSequence s) {
-        Number n;
-        try {
-            n = Integer.parseInt(s.toString());
-        } catch (NumberFormatException e) {
-            try {
-                n = Double.parseDouble(s.toString());
-            } catch (NumberFormatException e1) {
-                n = null;
-            }
-        }
-        return n;
     }
 
     // TODO: Save state by ID - ID must persist between fragment recreations
@@ -163,7 +159,6 @@ public class NumberFieldCompoundView extends RelativeLayout implements TextWatch
             out.writeParcelable(edit, flags);
         }
 
-        @SuppressWarnings("hiding")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             public SavedState createFromParcel(Parcel in) {
                 return new NumberFieldCompoundView.SavedState(in);

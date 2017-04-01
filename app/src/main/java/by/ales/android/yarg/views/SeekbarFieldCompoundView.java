@@ -5,9 +5,11 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -18,17 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.ales.android.yarg.R;
+import by.ales.android.yarg.utils.NumberUtils;
+import by.ales.android.yarg.views.filters.DiscardNonChangingNumberFilter;
+import by.ales.android.yarg.views.filters.MinMaxNumberFilter;
 
 /**
  * Created by Ales on 30.03.2017.
  */
 public class SeekbarFieldCompoundView extends RelativeLayout
-        implements TextWatcher, SeekBar.OnSeekBarChangeListener {
+        implements TextWatcher, View.OnFocusChangeListener, SeekBar.OnSeekBarChangeListener {
     public static final String TAG = "SeekbarFieldCView";
 
 
     private EditText editView;
-
     private TextView labelView;
     private SeekBar seekbarView;
     private int minValue;
@@ -63,6 +67,7 @@ public class SeekbarFieldCompoundView extends RelativeLayout
         editView = (EditText) this.findViewWithTag("tag_seekbar_field_view_edit");
         editView.setId(View.generateViewId());
         editView.addTextChangedListener(this);
+        editView.setOnFocusChangeListener(this);
 
         labelView = (TextView) this.findViewWithTag("tag_seekbar_field_view_label");
         labelView.setId(View.generateViewId());
@@ -94,6 +99,14 @@ public class SeekbarFieldCompoundView extends RelativeLayout
             }
             minValue = Integer.valueOf(minValueS);
             maxValue = Integer.valueOf(maxValueS);
+
+            editView.setInputType(minValue < 0 ?
+                    (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED) :
+                    InputType.TYPE_CLASS_NUMBER);
+            editView.setFilters(new InputFilter[] {
+                    DigitsKeyListener.getInstance(minValue < 0, false), // order is important, using input type in layout adds filter to end, not to start
+                    new MinMaxNumberFilter(minValue, maxValue, true)
+            });
             seekbarView.setMax(maxValue - minValue);
 
             String value = arr.getString(R.styleable.FieldWithLabel_value);
@@ -137,30 +150,14 @@ public class SeekbarFieldCompoundView extends RelativeLayout
         }
     }
 
-    private Integer parseText(CharSequence s) {
-        Integer n;
-        try {
-            n = Integer.parseInt(s.toString());
-        } catch (NumberFormatException e) {
-            n = null;
-        }
-        return n;
-    }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
+    public void onTextChanged(CharSequence s, int start, int before, int count) { }
     @Override
     public void afterTextChanged(Editable s) {
-        Log.d(TAG, "Text changed: " + s);
-        Integer val = parseText(s);
+        Integer val = NumberUtils.tryParseInt(s);
         if (val != null) {
             if (val > maxValue) {
                 s.clear();
@@ -176,6 +173,23 @@ public class SeekbarFieldCompoundView extends RelativeLayout
     }
 
     @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (v.equals(editView)) {
+            if (!hasFocus) {
+                Integer val = NumberUtils.tryParseInt(editView.getText());
+                if (val == null) {
+                    editView.setText(String.valueOf(minValue));
+                } else if (val < minValue) {
+                    editView.setText(minValue);
+                } else if (val > maxValue) {
+                    editView.setText(String.valueOf(maxValue));
+                }
+            }
+        }
+    }
+
+
+    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         int value = getValueFromProgress(progress, minValue);
         if (value < minValue) {
@@ -187,14 +201,25 @@ public class SeekbarFieldCompoundView extends RelativeLayout
         syncProgressValueChanged(value);
         notifyOnValueChanged(value);
     }
-
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
+    public void onStartTrackingTouch(SeekBar seekBar) { }
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) { }
+
+
+    public void addValueChangedListener(Listener listener) {
+        if (valueChangedListeners == null) {
+            valueChangedListeners = new ArrayList<>();
+        }
+        valueChangedListeners.add(listener);
     }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
+    public void removeValueChangedListener(Listener listener) {
+        if (valueChangedListeners != null) {
+            valueChangedListeners.remove(listener);
+        }
     }
+
 
     // TODO: Save state by ID - ID must persist between fragment recreations
     @Override
@@ -224,7 +249,6 @@ public class SeekbarFieldCompoundView extends RelativeLayout
     }
 
     public static class SavedState extends BaseSavedState {
-
         Parcelable label;
         Parcelable edit;
         Parcelable seekbar;
@@ -242,7 +266,6 @@ public class SeekbarFieldCompoundView extends RelativeLayout
             out.writeParcelable(seekbar, flags);
         }
 
-        @SuppressWarnings("hiding")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
@@ -262,17 +285,4 @@ public class SeekbarFieldCompoundView extends RelativeLayout
         }
     }
 
-
-    public void addValueChangedListener(Listener listener) {
-        if (valueChangedListeners == null) {
-            valueChangedListeners = new ArrayList<>();
-        }
-        valueChangedListeners.add(listener);
-    }
-
-    public void removeValueChangedListener(Listener listener) {
-        if (valueChangedListeners != null) {
-            valueChangedListeners.remove(listener);
-        }
-    }
 }
