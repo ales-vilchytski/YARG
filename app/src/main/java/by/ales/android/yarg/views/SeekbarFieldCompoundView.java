@@ -21,7 +21,6 @@ import java.util.List;
 
 import by.ales.android.yarg.R;
 import by.ales.android.yarg.utils.NumberUtils;
-import by.ales.android.yarg.views.filters.DiscardNonChangingNumberFilter;
 import by.ales.android.yarg.views.filters.MinMaxNumberFilter;
 
 /**
@@ -116,6 +115,10 @@ public class SeekbarFieldCompoundView extends RelativeLayout
 
             arr.recycle();
         }
+    }
+
+    public Integer getValue() {
+        return NumberUtils.tryParseInt(editView.getText());
     }
 
     private void notifyOnValueChanged(Integer value) {

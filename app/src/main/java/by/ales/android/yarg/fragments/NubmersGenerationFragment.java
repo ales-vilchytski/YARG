@@ -7,18 +7,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import by.ales.android.yarg.R;
 import by.ales.android.yarg.data.GenerationParameters;
 import by.ales.android.yarg.data.NumbersGenerationParameters;
+import by.ales.android.yarg.data.NumbersGenerationResult;
+import by.ales.android.yarg.data.ResultCallback;
 import by.ales.android.yarg.fragments.listeners.GenerationParametersReadyListener;
 import by.ales.android.yarg.views.NumberFieldCompoundView;
+import by.ales.android.yarg.views.SeekbarFieldCompoundView;
 
 public class NubmersGenerationFragment extends Fragment {
     public static final String TAG = "NumberGenerationF";
 
     private NumberFieldCompoundView fromView;
     private NumberFieldCompoundView toView;
+    private SeekbarFieldCompoundView quantityView;
+    private EditText resultView;
 
     private GenerationParametersReadyListener listener;
 
@@ -38,6 +44,8 @@ public class NubmersGenerationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nubmers_generation, container, false);
         fromView = (NumberFieldCompoundView) view.findViewById(R.id.fragment_numbers_generation_from_field_view);
         toView = (NumberFieldCompoundView) view.findViewById(R.id.fragment_numbers_generation_to_field_view);
+        quantityView = (SeekbarFieldCompoundView) view.findViewById(R.id.fragment_numbers_generation_quantity_field_view);
+        resultView = (EditText) view.findViewById(R.id.fragment_numbers_generation_result_view);
 
         fromView.addValueChangedListener(new NumberFieldCompoundView.Listener() {
             @Override
@@ -53,13 +61,29 @@ public class NubmersGenerationFragment extends Fragment {
                 debounceOnGenerationParameters();
             }
         });
+        quantityView.addValueChangedListener(new SeekbarFieldCompoundView.Listener() {
+            @Override
+            public void onValueChanged(int n) {
+                Log.d(TAG, "New Qnt value: " + n);
+                debounceOnGenerationParameters();
+            }
+        });
         return view;
     }
 
     private void debounceOnGenerationParameters() {
         // TODO: delay/debounce!
         if (listener != null) {
-            listener.onGenerationParametersReady(prepareGenerationParameters());
+            listener.onGenerationParametersReady(prepareGenerationParameters(), new ResultCallback<NumbersGenerationResult>() {
+                @Override
+                public void call(NumbersGenerationResult result) {
+                    if (result == null) {
+                        return;
+                    }
+                    Log.d(TAG, "Numbers generated!");
+                    resultView.setText(result.getNumberList().toString());
+                }
+            });
         }
     }
 
@@ -69,6 +93,7 @@ public class NubmersGenerationFragment extends Fragment {
         params.setType(GenerationParameters.Type.NUMBERS);
         params.setFrom(fromView.getValue());
         params.setTo(toView.getValue());
+        params.setQuantity(quantityView.getValue());
 
         return params;
     }

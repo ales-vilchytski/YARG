@@ -49,10 +49,30 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                yarg:label="@string/quantity"
+                yarg:label="@string/fragment_numbers_generation_quantity_label"
                 yarg:value="1"
                 yarg:minValue="1"
                 yarg:maxValue="99"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_numbers_generation_result_label"/>
+            <EditText
+                android:id="@+id/fragment_numbers_generation_result_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border"
+                android:inputType="none"
                 />
 
         </LinearLayout>
