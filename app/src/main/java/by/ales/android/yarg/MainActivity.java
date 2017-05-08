@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements GenerationParamet
             return;
         }
         if (data.getType() == GenerationParameters.Type.NUMBERS) {
-            generationService.generateRandomNumbers((NumbersGenerationParameters) data, new ResultCallbackWrapper(callback, this));
+            generationService.generateRandomNumbers(
+                    (NumbersGenerationParameters) data,
+                    new ResultCallbackWrapper(callback, this));
         }
     }
 

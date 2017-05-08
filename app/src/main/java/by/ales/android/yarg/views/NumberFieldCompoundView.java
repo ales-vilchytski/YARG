@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -20,7 +19,6 @@ import java.util.List;
 import by.ales.android.yarg.R;
 import by.ales.android.yarg.utils.NumberUtils;
 import by.ales.android.yarg.views.filters.DiscardNonChangingNumberFilter;
-import by.ales.android.yarg.views.filters.MinMaxNumberFilter;
 
 
 /**

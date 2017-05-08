@@ -22,16 +22,25 @@
 
             <by.ales.android.yarg.views.NumberFieldCompoundView
                 android:id="@+id/fragment_numbers_generation_from_field_view"
+                android:nextFocusForward="@+id/fragment_numbers_generation_to_field_view"
+                android:nextFocusRight="@+id/fragment_numbers_generation_to_field_view"
+                android:nextFocusDown="@+id/fragment_numbers_generation_to_field_view"
+                android:nextFocusLeft="@+id/fragment_numbers_generation_to_field_view"
+                android:nextFocusUp="@+id/fragment_numbers_generation_to_field_view"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 yarg:label="@string/fragment_numbers_generation_from_label"
                 yarg:value="0" />
 
             <by.ales.android.yarg.views.NumberFieldCompoundView
                 android:id="@+id/fragment_numbers_generation_to_field_view"
+                android:nextFocusForward="@+id/fragment_numbers_generation_quantity_field_view"
+                android:nextFocusRight="@+id/fragment_numbers_generation_quantity_field_view"
+                android:nextFocusDown="@+id/fragment_numbers_generation_quantity_field_view"
+                android:nextFocusLeft="@+id/fragment_numbers_generation_from_field_view"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 yarg:label="@string/fragment_numbers_generation_to_label"
                 yarg:value="1" />
@@ -46,13 +55,51 @@
 
             <by.ales.android.yarg.views.SeekbarFieldCompoundView
                 android:id="@+id/fragment_numbers_generation_quantity_field_view"
+                android:nextFocusForward="@+id/fragment_numbers_generation_decimals_field_view"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 yarg:label="@string/fragment_numbers_generation_quantity_label"
                 yarg:value="1"
                 yarg:minValue="1"
                 yarg:maxValue="99"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:weightSum="1.0"
+            android:layout_marginTop="@dimen/view_vertical_margin">
+
+            <by.ales.android.yarg.views.NumberFieldCompoundView
+                android:id="@+id/fragment_numbers_generation_decimals_field_view"
+                android:nextFocusForward="@+id/fragment_numbers_generation_from_field_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                yarg:label="@string/fragment_numbers_generation_decimals_label"
+                yarg:value="2"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/view_vertical_margin">
+
+            <Button
+                android:id="@+id/fragment_numbers_generation_generate_button_view"
+                android:onClick="onGenerateButtonClick"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/fragment_numbers_generation_generate_label"
                 />
 
         </LinearLayout>
@@ -67,12 +114,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_numbers_generation_result_label"/>
-            <EditText
+            <TextView
                 android:id="@+id/fragment_numbers_generation_result_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/border"
-                android:inputType="none"
+                android:textIsSelectable="true"
+                android:focusable="false"
                 />
 
         </LinearLayout>

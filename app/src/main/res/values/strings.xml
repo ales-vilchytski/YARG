@@ -13,4 +13,6 @@
     <string name="fragment_title_dices">Roll dices</string>
     <string name="fragment_numbers_generation_quantity_label">Quantity</string>
     <string name="fragment_numbers_generation_result_label">Result</string>
+    <string name="fragment_numbers_generation_generate_label">Generate</string>
+    <string name="fragment_numbers_generation_decimals_label">Decimals</string>
 </resources>

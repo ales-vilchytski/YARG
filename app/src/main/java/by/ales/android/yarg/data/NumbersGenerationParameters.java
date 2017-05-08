@@ -7,6 +7,7 @@ public class NumbersGenerationParameters extends GenerationParameters {
 
     private Number from;
     private Number to;
+    private Integer decimals;
     private Integer quantity;
 
     public NumbersGenerationParameters() {
@@ -26,6 +27,14 @@ public class NumbersGenerationParameters extends GenerationParameters {
 
     public void setTo(Number to) {
         this.to = to;
+    }
+
+    public Integer getDecimals() {
+        return decimals;
+    }
+
+    public void setDecimals(Integer decimals) {
+        this.decimals = decimals;
     }
 
     public Integer getQuantity() {

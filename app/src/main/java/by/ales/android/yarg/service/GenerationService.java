@@ -22,6 +22,8 @@ public class GenerationService extends Service {
 
     private final IBinder mBinder = new LocalBinder();
 
+    public GenerationService() {}
+
     public class LocalBinder extends Binder {
         public GenerationService getService() {
             return GenerationService.this;
@@ -43,14 +45,22 @@ public class GenerationService extends Service {
             Random rand = new Random();
             double from = params.getFrom().doubleValue();
             double to = params.getTo().doubleValue();
+            Integer decimals = params.getDecimals();
+            if (decimals == null) {
+                decimals = 0;
+            }
             for (int i = 0; i < params.getQuantity(); ++i) {
-                double num = from + (rand.nextDouble() * ((to - from) + 1));
-                numbers.add(Math.ceil(num * 100) / 100);
+                double num = adjustNumbber(rand.nextDouble(), from, to);
+                numbers.add(Math.ceil(num * Math.pow(10, decimals)) / Math.pow(10, decimals));
             }
             result.setNumberList(numbers);
         }
 
         resultCallback.call(result);
+    }
+
+    public double adjustNumbber(double rand, double from, double to) {
+        return from + (rand * (to - from));
     }
 
 
