@@ -53,13 +53,18 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/view_vertical_margin">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:text="@string/fragment_numbers_generation_quantity_label"/>
             <by.ales.android.yarg.views.SeekbarFieldCompoundView
                 android:id="@+id/fragment_numbers_generation_quantity_field_view"
                 android:nextFocusForward="@+id/fragment_numbers_generation_decimals_field_view"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                yarg:label="@string/fragment_numbers_generation_quantity_label"
+                android:layout_weight="0.75"
+                yarg:label=""
                 yarg:value="1"
                 yarg:minValue="1"
                 yarg:maxValue="99"
