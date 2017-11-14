@@ -21,4 +21,8 @@ It's regular Android app (android 17 and later) which is developed in Android St
 
 Screenshots
 ---
-![List of random numbers](screenshots/v0.0.1_numbers_framed)
+<img alt="List of random numbers" src="screenshots/v0.0.1_numbers_framed.png?raw=true" width="320px"/>
+
+License
+---
+This project is licensed under the terms of the MIT license
