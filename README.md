@@ -21,4 +21,8 @@ It's regular Android app (android 17 and later) which is developed in Android St
 
 Screenshots
 ---
-![List of random numbers](screenshots/v0.0.1_numbers_framed)
+![List of random numbers](screenshots/v0.0.1_numbers_framed.png?raw=true)
+
+License
+---
+This project is licensed under the terms of the MIT license
