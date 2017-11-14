@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">YARG (Yet Another Random Generator)</string>
+    <string name="main_tab_layout_tab_numbers">Numbers</string>
+    <string name="main_tab_layout_tab_lists">Lists</string>
+    <string name="main_tab_layout_tab_dices">Dices</string>
+
+    <string name="fragment_numbers_generation_title">Numbers generation</string>
+    <string name="fragment_numbers_generation_from_label">From</string>
+    <string name="fragment_numbers_generation_to_label">To</string>
+
+    <string name="under_construction">Under construction</string>
+    <string name="fragment_title_lists">Generate lists</string>
+    <string name="fragment_title_dices">Roll dices</string>
+    <string name="fragment_numbers_generation_quantity_label">Quantity</string>
+    <string name="fragment_numbers_generation_result_label">Result</string>
+    <string name="fragment_numbers_generation_generate_label">Generate</string>
+    <string name="fragment_numbers_generation_decimals_label">Decimals</string>
 </resources>
